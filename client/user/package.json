@@ -1,0 +1,36 @@
+{
+  "name": "user-service",
+  "version": "1.0.0",
+  "description": "hosts pages for users of the site",
+  "main": "build_user/index.html",
+  "config": {
+    "port": 1235,
+    "localhost": "http://localhost:3000",
+    "server-http": "",
+    "server-https": ""
+  },
+  "scripts": {
+    "https-mode": "set HTTPS=true&&npm start",
+    "start": "parcel index.html -p 1235",
+    "build": "parcel build index.html",
+    "test": "jest tests --passWithNoTests"
+  },
+  "author": "EagleEye",
+  "license": "ISC",
+  "devDependencies": {
+    "@parcel/transformer-image": "^2.0.0-beta.2",
+    "@parcel/transformer-sass": "^2.0.0-nightly.736",
+    "jest": "^27.0.4",
+    "parcel": "^2.0.0-beta.2",
+    "react-test-renderer": "^17.0.2"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.9.2",
+    "bootstrap": "^5.0.1",
+    "identity-obj-proxy": "^3.0.0",
+    "js-cookie": "^2.2.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0"
+  }
+}

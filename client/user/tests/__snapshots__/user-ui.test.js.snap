@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Form rendered properly 1`] = `
+<center>
+  <div
+    className="card w-25 d-flex justify-content-center"
+    style={
+      Object {
+        "backgroundColor": "#F8EEFF",
+      }
+    }
+  >
+    <div
+      className="card-body"
+    >
+      <h3
+        style={
+          Object {
+            "color": "purple",
+          }
+        }
+      >
+        Login
+      </h3>
+      <p />
+      <div
+        className="form-group"
+      >
+        <input
+          class="form-control"
+          placeholder="Enter username"
+          type="text"
+        />
+        <p />
+        <input
+          class="form-control"
+          placeholder="Enter password"
+          type="password"
+        />
+        <p />
+      </div>
+      <button
+        class="btn btn-success"
+        onClick={[Function]}
+      >
+          Login   
+      </button>
+               
+      <button
+        class="btn btn-primary"
+        onClick={[Function]}
+      >
+          Register   
+      </button>
+       
+      <br />
+      <br />
+      <a
+        href="/forgot-password"
+      >
+        Forgot Password
+      </a>
+    </div>
+  </div>
+  <div
+    style={
+      Object {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "width": "100%",
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "backgroundColor": "rgba(0, 0, 0, 0.05)",
+          "borderRadius": "10px",
+          "bottom": "0px",
+          "left": "-3px",
+          "position": "relative",
+          "width": "100%",
+        }
+      }
+    >
+      <div
+        className="text-center p-3 mb-1"
+      >
+        <button
+          className="btn btn-outline-success"
+          onClick={[Function]}
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+        >
+          UP
+        </button>
+         © 2021 Sri Lanka Institute of Information Technology, developed by 
+        <b>
+          EagleEyes
+        </b>
+         on behalf of AF project, All Rights Reserved
+      </div>
+    </div>
+  </div>
+</center>
+`;

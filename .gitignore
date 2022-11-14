@@ -1,0 +1,9 @@
+.idea
+diagrams
+server/node_modules
+client/visitor/node_modules
+client/visitor/.parcel-cache
+client/visitor/dist
+client/user/node_modules
+client/user/.parcel-cache
+client/user/dist
