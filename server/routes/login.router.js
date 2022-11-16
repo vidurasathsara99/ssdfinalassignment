@@ -15,6 +15,10 @@ const {countOfDocuments} = require("../api/db/mongodb.api");
 const router = new Router({prefix:'/login'});
 const mongo = require('mongodb');
 const {updateDocument} = require("../api/db/mongodb.api");
+
+router.get('/', async ctx=>{
+    ctx.body = ctx.state._csrf;
+})
 //post method in login
 router.post('/',async (context)=>{
     const username = context.request.body.username;
@@ -63,6 +67,7 @@ router.post('/',async (context)=>{
                 }
             }
             if (login.passwordIsValid(password)) {
+                context.cookies.set('jwt_cookie','HeuteIstDerErsteTagVomRestDeinesLebens')
                 context.response.body = "success."+login.login_id;
             } else {
                 context.response.body = "Invalid Password!";

@@ -10,6 +10,7 @@ import PasswordResetForm from "./Component/UserHandlers/PasswordResetForm";
 import AdminRouter from "./Component/Admin/ARouter";
 import GenericUserRouter from "./Component/User/URouter";
 import ReviewRouter from "./Component/Reviewer/RRouter";
+import WorkerRouter from "./Component/Worker/WorkerRouter";
 export default () =>{
     return <Router>
         <Switch>
@@ -39,6 +40,9 @@ export default () =>{
             </Route>
             <Route path={"/user"}>
                 <GenericUserRouter/>
+            </Route>
+            <Route path={"/worker"}>
+                <WorkerRouter/>
             </Route>
         </Switch>
     </Router>

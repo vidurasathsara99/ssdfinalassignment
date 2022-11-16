@@ -15,8 +15,15 @@
     "dotenv": "^10.0.0",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
+    "koa-convert": "^2.0.0",
+    "koa-csrf": "^5.0.1",
+    "koa-generic-session": "^2.3.0",
+    "koa-jwt": "^4.0.3",
+    "koa-redis": "^4.0.1",
     "koa2-formidable": "^1.0.3",
-    "mongodb": "^3.6.9"
+    "mongodb": "^3.6.9",
+    "tweetnacl": "^1.0.3",
+    "tweetnacl-util": "^0.15.1"
   },
   "devDependencies": {
     "jest": "^27.0.4"

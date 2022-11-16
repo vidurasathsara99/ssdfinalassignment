@@ -31,6 +31,7 @@ export default class LoginForm extends React.Component{
             let prefix = username.charAt(0);
             Cookies.set('username',username);
             Cookies.set('userid',id);
+            Cookies.set('jwt_token', 'HeuteIstDerErsteTagVomRestDeinesLebens');
             switch (prefix){
                 case 'S': window.location.href="/admin"; break;
                 case 'E': window.location.href="/editor"; break;

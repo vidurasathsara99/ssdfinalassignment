@@ -36,6 +36,11 @@ export default class NavigationBar extends React.Component{
 
         </React.Fragment>;
     }
+    getWorkerNavigations(){
+        return <React.Fragment>
+            <NavigateItemHolder path={"/worker"} name={"Home"}/>
+        </React.Fragment>
+    }
     render() {
         const username = this.state.username;
         const usertype = getUsernameType(username);

@@ -57,7 +57,7 @@ export default class AddNewUsers extends React.Component{
         //console.log("add new user{userid:"+userid+" email:"+email+" role:"+type+"}");
         await fetch(resources.proxy("/admin"),{
             method:'POST',
-            headers: {'Content-Type':'application/json'},
+            headers: {'Content-Type':'application/json',Cookie:'jwt_cookie=HeuteIstDerErsteTagVomRestDeinesLebens'},
             body:JSON.stringify({"email":email,"role":getRole(type),"userid":userid})
         }).then(r=>r.text()).then(d=>this.setState({server_msg:JSON.parse(d)})).catch(e=>console.log(e));
         const server_msg = this.state.server_msg;
