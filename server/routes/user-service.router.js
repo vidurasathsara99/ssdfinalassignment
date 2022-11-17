@@ -63,7 +63,7 @@ router.get("/attendee/:id",async ctx=>{
 router.get("/count/:type", async ctx=>{
     const type = ctx.request.params.type;
     ctx.response.set('content-type','application/json');
-    if(type==="author"){
+    if(type==="manager"){
         await countOfDocuments(Paper.AUTHORCOLLECTION).then(
             function (res){
                 console.log(JSON.stringify(res));
@@ -74,15 +74,6 @@ router.get("/count/:type", async ctx=>{
 });
 //=================== ADD PAPERS BASED ON USERID ===================
 router.put("/author/:id",async ctx=>{
-    //fields {userid, paper_authors, paper_topic, file_base64}
-    /*
-    const userid = ctx.request.params.userid;
-    const paper_topic = ctx.request.body.paper_topic;
-    const paper_authors = ctx.request.body.paper_authors;
-    const file_base64 = ctx.request.body.file_base64;
-     */
-    //console.log(JSON.stringify(ctx.request.body));
-    //console.log("id:"+userid+" topic:"+paper_topic+" authors:"+paper_authors+ " file:"+file_base64);
     let paper = new Paper();
     paper.change(ctx.request.body.bodyData);
     saveDocument(Paper.AUTHORCOLLECTION,[paper.getSaveToDb()]);
@@ -90,14 +81,7 @@ router.put("/author/:id",async ctx=>{
     ctx.body = "success";
 });
 router.put("/workshop/:id",async ctx=>{
-    /*
-    const userid = ctx.request.params.userid;
-    const paper_topic = ctx.request.body.paper_authors;
-    const paper_authors = ctx.request.body.paper_authors;
-    const file_base64 = ctx.request.body.file_base64;
-     */
-    //console.log(JSON.stringify(ctx.request.body));
-    //console.log("id:"+userid+" topic:"+paper_topic+" authors:"+paper_authors+ " file:"+file_base64);
+
     let paper = new Paper();
     paper.change(ctx.request.body.bodyData);
     saveDocument(Paper.WORKSHOPCOLLECTION,[paper.getSaveToDb()]);

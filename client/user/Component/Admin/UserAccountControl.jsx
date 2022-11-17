@@ -147,11 +147,8 @@ export default class UserAccountControl extends React.Component{
                     <select className="mx-1" ref={(ref) => {this.search_role = ref}}>
                         <option>Select</option>
                         <option value={"ADMIN"}>Admin</option>
-                        <option value={"EDITOR"}>Editor</option>
-                        <option value={"REVIEWER"}>Reviewer</option>
-                        <option value={"WORKSHOP-PRESENTER"}>Presenter</option>
-                        <option value={"RESEARCHER"}>Author</option>
-                        <option value={"ATTENDEE"}>Attendee</option>
+                        <option value={"WORKER"}>Worker</option>
+                        <option value={"MANAGER"}>Manager</option>
                     </select>
                 </div>
                 <div style={{display: "table-cell"}}>
