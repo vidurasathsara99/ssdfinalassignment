@@ -39,7 +39,8 @@ export default class WorkerHome extends React.Component {
         if (userid == undefined) return;
 
         await fetch(resources.proxy(`/msg/list/${userid}`), {
-            method: 'get'
+            method: 'get',
+            headers: {'Authorization':`Bearer ${Cookies.get('jwt_cookie', null)}`}
         }).then(r => r.json()).then(d => {
             this.setState({messageList: d})
         })
@@ -72,7 +73,7 @@ export default class WorkerHome extends React.Component {
 
         await fetch(resources.proxy("/msg/new"), {
             method: 'post',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization':`Bearer ${Cookies.get('jwt_cookie', null)}`},
             body: JSON.stringify(postBody)
         }).then(r => r.json()).then(d => console.log(d)).catch(e => console.log(e))
 

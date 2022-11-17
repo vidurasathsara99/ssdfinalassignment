@@ -28,13 +28,7 @@ server.use(session({
 }));
 //attach to server
 server.use(cors('Access-Control-Allow-Origin'));
-// server.use(jwt({
-//     cookie: 'jwt_cookie',
-//     key: 'jwtdata',
-//     secret: [
-//         'HeuteIstDerErsteTagVomRestDeinesLebens'
-//     ]
-// }).unless({path: [/^\/login/]}))
+server.use(jwt({secret: process.env.JWT_SECRET}).unless({path: [/^\/login/]}))
 // server.use(new CSRF());
 server.use(formidable({uploadDir:'./server/files/temp', keepExtensions:true}));
 server.use(bodyparser())

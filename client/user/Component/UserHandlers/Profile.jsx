@@ -24,7 +24,7 @@ export default class Profile extends React.Component{
         const userid = this.state.userid;
         await fetch(resources.proxy("/profile/"+userid),{
             method:'get',
-            headers:{'Accept':'application/json'}
+            headers:{'Accept':'application/json', 'Authorization':`Bearer ${Cookies.get('jwt_cookie', null)}`}
         }).then(r=>r.text()).then(d=>this.setState({data:JSON.parse(d)})).catch(e=>console.log(e));
         const data = this.state.data;
         console.log("data: "+JSON.stringify(data));
@@ -39,7 +39,7 @@ export default class Profile extends React.Component{
         console.log("sending profile: "+JSON.stringify(this.bundleUserDetails(confirm_password)));
         await fetch(resources.proxy("/profile/"+userid),{
             method:'put',
-            headers:{'Content-Type':'application/json'},
+            headers:{'Content-Type':'application/json', 'Authorization':`Bearer ${Cookies.get('jwt_cookie', null)}`},
             body:JSON.stringify(this.bundleUserDetails(confirm_password))
         }).then(r=>r.text()).then(d=>this.setState({server_msg:d})).catch(e=>console.log(e));
         const server_msg = this.state.server_msg;

@@ -15,6 +15,8 @@ const {countOfDocuments} = require("../api/db/mongodb.api");
 const router = new Router({prefix:'/login'});
 const mongo = require('mongodb');
 const {updateDocument} = require("../api/db/mongodb.api");
+require('dotenv').config();
+const jsonwebtoken = require('jsonwebtoken');
 
 router.get('/', async ctx=>{
     ctx.body = ctx.state._csrf;
@@ -67,10 +69,15 @@ router.post('/',async (context)=>{
                 }
             }
             if (login.passwordIsValid(password)) {
-                context.cookies.set('jwt_cookie','HeuteIstDerErsteTagVomRestDeinesLebens')
-                context.response.body = "success."+login.login_id;
+                //set jwt cookie for authorization
+                let jwt_cookie = jsonwebtoken.sign({
+                    data: `${login.username}-${login.login_id}`
+                },process.env.JWT_SECRET)
+                //context.response.body = "success."+login.login_id;
+
+                context.response.body = {"jwt_cookie":jwt_cookie, "status":"success","id":login.login_id}
             } else {
-                context.response.body = "Invalid Password!";
+                context.response.body = {"status":"Invalid Password"};
             }
         }
     }catch (e){

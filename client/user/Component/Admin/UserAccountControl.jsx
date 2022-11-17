@@ -22,6 +22,7 @@ export default class UserAccountControl extends React.Component{
     async fetchAllUsers(){
         await fetch(resources.proxy("/admin"),{
             method:'get',
+            headers: {'Authorization':`Bearer ${Cookies.get('jwt_cookie', null)}`}
         }).then(r=>r.text()).then(d=>this.setState({usersFromDb:JSON.parse(d)})).catch(e=>console.log(e));
         const usersFromDb = this.state.usersFromDb;
         //console.log(JSON.stringify(usersFromDb));
@@ -31,7 +32,7 @@ export default class UserAccountControl extends React.Component{
         let server_msg = null;
         await fetch(resources.proxy("/admin/user/ban/"+userid),{
             method:'put',
-            headers:{'Content-Type':'application/json'},
+            headers:{'Content-Type':'application/json', 'Authorization':`Bearer ${Cookies.get('jwt_cookie', null)}`},
             body:JSON.stringify({"ban":true})
         }).then(r=>r.text()).then(d=>server_msg=d).catch(e=>console.log(e));
         if(server_msg==="success"){
@@ -42,7 +43,7 @@ export default class UserAccountControl extends React.Component{
         let server_msg = null;
         await fetch(resources.proxy("/admin/user/ban/"+userid),{
             method:'put',
-            headers:{'Content-Type':'application/json'},
+            headers:{'Content-Type':'application/json', 'Authorization':`Bearer ${Cookies.get('jwt_cookie', null)}`},
             body:JSON.stringify({"ban":false})
         }).then(r=>r.text()).then(d=>server_msg=d).catch(e=>console.log(e));
         if(server_msg==="success"){
@@ -53,7 +54,7 @@ export default class UserAccountControl extends React.Component{
         let server_msg = null;
         await fetch(resources.proxy("/admin/user/reset/"+userid),{
             method:'put',
-            headers:{'Content-Type':'application/json'},
+            headers:{'Content-Type':'application/json', 'Authorization':`Bearer ${Cookies.get('jwt_cookie', null)}`},
             body:JSON.stringify({})
         }).then(r=>r.text()).then(d=>server_msg=d).catch(e=>console.log(e));
         server_msg = server_msg.split(".");

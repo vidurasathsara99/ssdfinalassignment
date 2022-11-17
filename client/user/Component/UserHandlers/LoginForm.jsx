@@ -24,14 +24,18 @@ export default class LoginForm extends React.Component{
             method:'post',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify(loginData)
-        }).then(r=>r.text()).then(d=>this.setState({server_msg:d})).catch(e=>console.log(e));
+        }).then(r=>r.text()).then(d=>{
+            this.setState({server_msg:d})
+        }).catch(e=>console.log(e));
         const server_msg = this.state.server_msg;
-        if(server_msg.substring(0,7)==="success"){
-            const id = server_msg.substring(8,server_msg.length);
+
+        const responseJson = JSON.parse(server_msg);
+        
+        if(responseJson.status==="success"){
             let prefix = username.charAt(0);
             Cookies.set('username',username);
-            Cookies.set('userid',id);
-            Cookies.set('jwt_token', 'HeuteIstDerErsteTagVomRestDeinesLebens');
+            Cookies.set('userid',responseJson.id);
+            Cookies.set('jwt_cookie', responseJson.jwt_cookie)
             switch (prefix){
                 case 'S': window.location.href="/admin"; break;
                 case 'E': window.location.href="/editor"; break;
@@ -51,8 +55,9 @@ export default class LoginForm extends React.Component{
         let error_msg;
         if(server_msg!==null)
             if(server_msg.length>8)
-                if(server_msg.substring(0,7)!=="success")
-                    error_msg = server_msg;
+                if(server_msg.status!==undefined)
+                    if(server_msg.substring(0,7)!=="success")
+                        error_msg = server_msg.status;
         return <React.Fragment>
 
             <center>

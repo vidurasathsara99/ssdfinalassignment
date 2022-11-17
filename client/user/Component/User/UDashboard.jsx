@@ -28,16 +28,19 @@ export default class UDashboard extends React.Component{
     componentDidMount() {
         const role = this.state.role;
         if(role===UserRoles.MANAGER){
-            this.fetchPapersFromServer("manager");
+            this.fetchPapersFromServer("author");
         }else if(role===UserRoles.WORKER){
             this.fetchPapersFromServer("worker");
      
         }
+
+        console.log(this.state.papers)
     }
     async fetchPapersFromServer(type){
         const userid = this.state.userid;
         await fetch(resources.proxy("/user/"+type+"/"+userid),{
-            method:'get'
+            method:'get', 
+            headers: {'Authorization':`Bearer ${Cookies.get('jwt_cookie', null)}`}
         }).then(r=>r.text()).then(d=>this.setState({papers:JSON.parse(d)})).catch(e=>console.log(e));
     }
     
@@ -52,7 +55,7 @@ export default class UDashboard extends React.Component{
         }
         await fetch(resources.proxy("/user/"+type+"/"+userid),{
             method:'put',
-            headers: {'Content-Type':'application/json'},
+            headers: {'Content-Type':'application/json', 'Authorization':`Bearer ${Cookies.get('jwt_cookie', null)}`},
             body:JSON.stringify({bodyData})
         }).then(r=>r.text()).then(d=>this.setState({server_msg:d})).catch(e=>console.log(e));
         const server_msg = this.state.server_msg;

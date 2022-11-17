@@ -24,7 +24,8 @@ export default class ReviewWorkshops extends React.Component{
     async getPapersFromServer(){
         let papers = [];
         await fetch(resources.proxy("/user/workshop/default"),{
-            method: 'get'
+            method: 'get', 
+            headers: {'Authorization':`Bearer ${Cookies.get('jwt_cookie', null)}`}
         }).then(r=>r.text()).then(d=>{papers=JSON.parse(d)}).catch(e=>console.log(e));
         //set base64 as the pdf
         for(let i=0;i<papers.length;i++){
@@ -39,7 +40,7 @@ export default class ReviewWorkshops extends React.Component{
         let server_msg = null;
         await fetch(resources.proxy("/user/review/workshop/"+paper_id),{
             method: 'put',
-            headers: {'Content-Type':'application/json'},
+            headers: {'Content-Type':'application/json', 'Authorization':`Bearer ${Cookies.get('jwt_cookie', null)}`},
             body:JSON.stringify({action:action})
         }).then(r=>r.text()).then(d=>server_msg=d).catch(e=>console.log(e));
         this.setState({server_msg:server_msg});
