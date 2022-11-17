@@ -17,7 +17,7 @@
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
     "koa-convert": "^2.0.0",
-    "koa-csrf": "^5.0.1",
+    "koa-csrf-header": "^1.0.2",
     "koa-generic-session": "^2.3.0",
     "koa-jwt": "^4.0.3",
     "koa-redis": "^4.0.1",

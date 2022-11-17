@@ -5,5 +5,5 @@ exports.proxy = function proxy(sub_directory){
     let http_server = require('./package.json').config["server-http"];
     //https server mode
     let https_server = require('./package.json').config["server-https"];
-    return local_server+sub_directory;
+    return https_server+sub_directory;
 }

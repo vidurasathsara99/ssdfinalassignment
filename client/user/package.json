@@ -7,7 +7,7 @@
     "port": 1235,
     "localhost": "http://localhost:3000",
     "server-http": "",
-    "server-https": ""
+    "server-https": "https://localhost.dev:3002"
   },
   "scripts": {
     "https-mode": "set HTTPS=true&&npm start",

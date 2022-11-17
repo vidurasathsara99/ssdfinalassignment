@@ -12,6 +12,15 @@ export default class LoginForm extends React.Component{
         }
         this.redirectToSignUp=this.redirectToSignUp.bind(this);
         this.handleLogin=this.handleLogin.bind(this);
+        this.getCsrfToken=this.getCsrfToken.bind(this);
+    }
+    async componentDidMount(){
+        await this.getCsrfToken();
+    }
+    async getCsrfToken(){
+        await fetch(resources.proxy("/login"),{
+            method: 'get'
+        })
     }
     redirectToSignUp(){
         window.location.href = "/sign-up";
@@ -22,7 +31,7 @@ export default class LoginForm extends React.Component{
         let loginData = {"username":username,"password":this.password.value};
         await fetch(resources.proxy("/login"),{
             method:'post',
-            headers: {'Content-Type':'application/json'},
+            headers: {'Content-Type':'application/json', 'X-CSRF-Token':'Cmw_YHTqZJZeHb_6uwMl01IlAcSJhrg8'},
             body: JSON.stringify(loginData)
         }).then(r=>r.text()).then(d=>{
             this.setState({server_msg:d})
@@ -69,13 +78,13 @@ export default class LoginForm extends React.Component{
             <p>{error_msg}</p>
 
                 <div className="form-group">
-            <input type={"text"} class="form-control" placeholder={"Enter username"} ref={(ref) => {this.username = ref}}/>
+            <input type={"text"} className="form-control" placeholder={"Enter username"} ref={(ref) => {this.username = ref}}/>
             <p/>
-            <input type={"password"}  class="form-control"  placeholder={"Enter password"} ref={(ref) => {this.password = ref}}/>
+            <input type={"password"}  className="form-control"  placeholder={"Enter password"} ref={(ref) => {this.password = ref}}/>
             <p/>
 </div>
 
-            <button class="btn btn-success" onClick={this.handleLogin}>&nbsp;&nbsp;Login &nbsp;&nbsp;</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button className="btn btn-success" onClick={this.handleLogin}>&nbsp;&nbsp;Login &nbsp;&nbsp;</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 {/*             <button class="btn btn-primary" onClick={this.redirectToSignUp}>&nbsp;&nbsp;Register &nbsp;&nbsp;</button> <br></br> */}
             <br/>
             <a href={"/forgot-password"}>Forgot Password</a>

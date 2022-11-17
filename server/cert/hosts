@@ -25,3 +25,6 @@
 127.0.0.1 kubernetes.docker.internal
 # End of section
 127.0.0.1 abccompany.local
+127.0.0.1 localhost.dev
+127.0.0.1 localhost.prod
+127.0.0.1 localhost.net

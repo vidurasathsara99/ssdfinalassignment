@@ -19,7 +19,7 @@ require('dotenv').config();
 const jsonwebtoken = require('jsonwebtoken');
 
 router.get('/', async ctx=>{
-    ctx.body = ctx.state._csrf;
+    ctx.body = "Hello";
 })
 //post method in login
 router.post('/',async (context)=>{

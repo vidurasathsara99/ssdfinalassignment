@@ -8,7 +8,7 @@ const path = require('path');
 const http = require('http');
 const https = require('https');
 const jwt = require('koa-jwt');
-const CSRF = require('koa-csrf');
+const csrf = require("koa-csrf-header");
 const session = require('koa-generic-session');
 const convert = require('koa-convert');
 const redisStore = require('koa-redis');
@@ -22,15 +22,27 @@ const ChartMethodsRouter = require('./routes/counter.router').ChartMethodsRouter
 const MessageRoutes = require('./routes/message.router').MessageRouter;
 //setup server
 const server = new Koa();
-server.keys = ['keys','keykeys'];
-server.use(session({
-    store: redisStore()
-}));
+server.keys = ['keys', 'keykeys'];
+server.use(session(server));
 //attach to server
+const corsOptions = {
+    origin: '*',
+}
 server.use(cors('Access-Control-Allow-Origin'));
-server.use(jwt({secret: process.env.JWT_SECRET}).unless({path: [/^\/login/]}))
-// server.use(new CSRF());
-server.use(formidable({uploadDir:'./server/files/temp', keepExtensions:true}));
+server.use(jwt({ secret: process.env.JWT_SECRET }).unless({ path: [/^\/login/] }))
+// server.use(
+//     csrf({
+//         invalidTokenMessage: "Invalid CSRF Token",
+//         invalidTokenStatusCode: 403,
+//         excludedMethods: ["GET", "HEAD", "OPTIONS"],
+//         headerField: "X-CSRF-Token",
+//         getToken: ctx => ctx.session.csrfToken,
+//         setToken: (token, ctx) => {
+//             ctx.session.csrfToken = token;
+//         }
+//     })
+// );
+server.use(formidable({ uploadDir: './server/files/temp', keepExtensions: true }));
 server.use(bodyparser())
     .use(HomeRoutes.routes()).use(HomeRoutes.allowedMethods())
     .use(LoginRoutes.routes()).use(LoginRoutes.allowedMethods())
@@ -39,30 +51,30 @@ server.use(bodyparser())
     .use(UserServices.routes()).use(UserServices.allowedMethods())
     .use(ChartMethodsRouter.routes()).use(ChartMethodsRouter.allowedMethods())
     .use(MessageRoutes.routes()).use(MessageRoutes.allowedMethods())
-    .use(context=>{
+    .use(context => {
         //where the request is to an invalid endpoint
-        context.body="Access Denied!";
+        context.body = "Access Denied!";
         //context.redirect('http://localhost:1234/backendbrowser/index.html');
     });
 server.listen(process.env.SERVER_LOCAL_PORT);
-console.log("Development Application is running on port "+process.env.SERVER_LOCAL_PORT);
+console.log("Development Application is running on port " + process.env.SERVER_LOCAL_PORT);
 
 //config for https and https
 let serverCallBack = server.callback();
-let config ={
-    domain:"abccompany.local",
-    http:{ port: 3001,},
-    https:{
+let config = {
+    domain: "localhost.dev",
+    http: { port: 3001, },
+    https: {
         port: 3002,
         options: {
-            key: fs.readFileSync((process.cwd(), 'cert/AbcCompany.key'),'utf8'),
-            cert: fs.readFileSync((process.cwd(), 'cert/AbcCompany.crt'),'utf8'),
+            key: fs.readFileSync((process.cwd(), 'cert/AbcCompany.key'), 'utf8'),
+            cert: fs.readFileSync((process.cwd(), 'cert/AbcCompany.crt'), 'utf8'),
         },
     },
 };
 let httpServer = http.createServer(serverCallBack);
-httpServer.listen(config.http.port, function (e){
-    if(!!e)
+httpServer.listen(config.http.port, function (e) {
+    if (!!e)
         console.error('HTTP server FAILED: ', e, (e && e.stack));
     else
         console.log(`HTTP server is OK: http://${config.domain}:${config.http.port}`);
@@ -70,8 +82,8 @@ httpServer.listen(config.http.port, function (e){
 //http.createServer(app.callback()).listen(3000);
 //for https
 let httpsServer = https.createServer(config.https.options, serverCallBack);
-httpsServer.listen(config.https.port, function (e){
-    if(!!e)
+httpsServer.listen(config.https.port, function (e) {
+    if (!!e)
         console.error('HTTPS server FAILED: ', e, (e && e.stack));
     else
         console.log(`HTTPS server is OK: https://${config.domain}:${config.https.port}`);
