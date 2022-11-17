@@ -31,14 +31,13 @@ export default class NavigationBar extends React.Component{
     }
     getUserNavigations(){
         return <React.Fragment>
-            <NavigateItemHolder path={"/user/dashboard"} name={"Dashboard"}/>
-
-
+            <NavigateItemHolder path={"/user/dashboard"} name={"Files"}/>
+            <NavigateItemHolder path={"/user/messages"} name={"Messages"}/>
         </React.Fragment>;
     }
     getWorkerNavigations(){
         return <React.Fragment>
-            <NavigateItemHolder path={"/worker"} name={"Home"}/>
+            <NavigateItemHolder path={"/worker"} name={"Messages"}/>
         </React.Fragment>
     }
     render() {
@@ -47,8 +46,10 @@ export default class NavigationBar extends React.Component{
         let navContent = [];
         if(usertype===UserRoles.ADMIN){
             navContent.push(this.getAdminNavigations());
-        }else if(usertype===UserRoles.REVIEWER){
-            navContent.push(this.getReviewerNavigations());
+        }else if(usertype===UserRoles.MANAGER){
+            navContent.push(this.getUserNavigations());
+        }else if(usertype===UserRoles.WORKER){
+            navContent.push(this.getWorkerNavigations());
         }else{
             navContent.push(<NavigateItemHolder path={"#"} name={"ABC Company"}/>);
         }

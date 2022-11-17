@@ -37,7 +37,7 @@ export default class LoginForm extends React.Component{
                 case 'E': window.location.href="/editor"; break;
                 case 'C': window.location.href="/reviewer"; break;
                 case 'R': window.location.href="/user"; break;
-                case 'W': window.location.href="/user"; break;
+                case 'W': window.location.href="/worker"; break;
                 case 'A': window.location.href="/user"; break;
                 default: this.setState({server_msg:"Unknown user!"});
             }
