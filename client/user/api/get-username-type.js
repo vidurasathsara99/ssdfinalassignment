@@ -6,11 +6,8 @@ exports.getUsernameType = function getUsernameType(username){
     let prefix = username.charAt(0);
     switch (prefix){
         case 'S': return UserRoles.ADMIN;
-        case 'E': return UserRoles.EDITOR;
-        case 'C': return UserRoles.REVIEWER;
-        case 'R': return UserRoles.RESEARCHER;
-        case 'W': return UserRoles.WORKSHOP_PRESENTER;
-        case 'A': return UserRoles.ATTENDEE;
+        case 'R': return UserRoles.MANAGER;
+        case 'W': return UserRoles.WORKER;
         default: return null;
     }
 }

@@ -5,16 +5,10 @@ exports.generateUsername = function generateUsername(role){
     let prefix = '';
     if(role===Role.ADMIN){
         prefix = 'SAO';
-    }else if(role===Role.EDITOR){
-        prefix = 'ECR';
-    }else if(role===Role.REVIEWER){
-        prefix = 'CRR';
-    }else if(role===Role.RESEARCHER){
+    }else if(role===Role.MANAGER){
         prefix = 'RA';
-    }else if(role===Role.WORKSHOP_PRESENTER){
+    }else if(role===Role.WORKER){
         prefix = 'WSP';
-    }else if(role===Role.ATTENDEE){
-        prefix = 'AU';
     }else{
         prefix = "UN";
     }
@@ -48,13 +42,9 @@ exports.generateUsername = function generateUsername(role){
 exports.UserRoleIsValid = function UserRoleIsValid(role){
     if(role===UserRoles.ADMIN){
         return true;
-    }else if(role===UserRoles.EDITOR){
+    }else if(role===UserRoles.MANAGER){
         return true;
-    }else if(role===UserRoles.REVIEWER){
+    }else if(role===UserRoles.WORKER){
         return true;
-    }else if(role===UserRoles.RESEARCHER){
-        return true;
-    }else if(role===UserRoles.WORKSHOP_PRESENTER){
-        return true;
-    }else return role === UserRoles.ATTENDEE;
+    }else return role === UserRoles.WORKER;
 }

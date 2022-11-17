@@ -15,7 +15,7 @@ export default function DocumentsHtml(type,role,documents,onClickUpload, error){
 
         let buttonPayment = <button className={"btn btn-success"} onClick={()=>{window.location.href="/user/payment/"+doc._id+"."+role}}>Add Payment</button>;
         let paymentOption = "";
-        if(role!=="WORKSHOP-PRESENTER"){
+        if(role!=="WORKER"){
             paymentOption = <td>{doc.payment==="pending"&&doc.status==="accept"?buttonPayment:doc.payment}</td>;;
         }
         records.push(<tr><td>{doc._id}</td><td><a href={link}>{doc.paper_topic}</a></td><td>{doc.paper_authors}</td></tr>);

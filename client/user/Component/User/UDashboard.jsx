@@ -16,25 +16,22 @@ export default class UDashboard extends React.Component{
             server_msg:null
         }
         //functions
-        this.getAuthorLayout=this.getAuthorLayout.bind(this);
-        this.getPresenterLayout=this.getPresenterLayout.bind(this);
-        this.getAttendeeLayout=this.getAttendeeLayout.bind(this);
+        this.getManagerLayout=this.getManagerLayout.bind(this);
+        this.getWorkerLayout=this.getWorkerLayout.bind(this);
         this.onClickUploadFile=this.onClickUploadFile.bind(this);
         //rest functions
         this.fetchPapersFromServer=this.fetchPapersFromServer.bind(this);
-        this.fetchPaymentsFromServer=this.fetchPaymentsFromServer.bind(this);
+       
         this.addPapersToServer=this.addPapersToServer.bind(this);
-        this.addPaymentToServer=this.addPaymentToServer.bind(this);
+
     }
     componentDidMount() {
         const role = this.state.role;
-        if(role===UserRoles.RESEARCHER){
-            this.fetchPapersFromServer("author");
-            this.fetchPaymentsFromServer("author");
-        }else if(role===UserRoles.WORKSHOP_PRESENTER){
-            this.fetchPapersFromServer("workshop");
-        }else{
-            this.fetchPaymentsFromServer("attendee");
+        if(role===UserRoles.MANAGER){
+            this.fetchPapersFromServer("manager");
+        }else if(role===UserRoles.WORKER){
+            this.fetchPapersFromServer("worker");
+     
         }
     }
     async fetchPapersFromServer(type){
@@ -43,19 +40,14 @@ export default class UDashboard extends React.Component{
             method:'get'
         }).then(r=>r.text()).then(d=>this.setState({papers:JSON.parse(d)})).catch(e=>console.log(e));
     }
-    async fetchPaymentsFromServer(type){
-        const userid = this.state.userid;
-        await fetch(resources.proxy("/user/"+type+"/"+userid),{
-            method:'get'
-        }).then(r=>r.text()).then(d=>this.setState({payments:JSON.parse(d)})).catch(e=>console.log(e));
-    }
+    
     async addPapersToServer(role, bodyData){
         const userid = this.state.userid;
         let type=null;
         //console.log("body: "+JSON.stringify({bodyData}));
-        if(role===UserRoles.RESEARCHER){
+        if(role===UserRoles.MANAGER){
             type="author";
-        }else if(role===UserRoles.WORKSHOP_PRESENTER){
+        }else if(role===UserRoles.WORKER){
             type="workshop";
         }
         await fetch(resources.proxy("/user/"+type+"/"+userid),{
@@ -67,12 +59,6 @@ export default class UDashboard extends React.Component{
         if(server_msg==="success"){
             await this.fetchPapersFromServer(type);
         }
-    }
-    async addPaymentToServer(type){
-        const userid = this.state.userid;
-        await fetch(resources.proxy("/user/payment/"+type+"/"+userid),{
-            method:'put'
-        }).then(r=>r.text()).then(d=>this.setState({server_msg:JSON.parse(d)})).catch(e=>console.log(e));
     }
     async onClickUploadFile(role){
         const userid = this.state.userid;
@@ -90,56 +76,20 @@ export default class UDashboard extends React.Component{
             reader.onerror = error => reject(error);
         });
         const file_base64 = (await tobase64);
-        //console.log("userid:"+userid+" role:"+role + " topic:"+paper_topic+" authors:"+paper_authors+" file:"+paper_file.name);
         const body = {"userid":userid,"paper_topic":paper_topic,"paper_authors":paper_authors,"file_base64":file_base64};
         await this.addPapersToServer(role,body);
     }
-    getAuthorLayout(error){
+    getManagerLayout(error){
         const role = this.state.role;
         const papers = this.state.papers;
-        return DocumentsHtml("Conference Paper",role,papers,this.onClickUploadFile,error);
+        return DocumentsHtml("Upload Paper",role,papers,this.onClickUploadFile,error);
     }
-    getPresenterLayout(error){
+    getWorkerLayout(error){
         const role = this.state.role;
         const papers = this.state.papers;
-        return DocumentsHtml("Workshop Paper",role,papers,this.onClickUploadFile,error);
+        return DocumentsHtml("Send Message",role,papers,this.onClickUploadFile,error);
     }
-    getAttendeeLayout(error){
-        const payment = this.state.payments;
-        let content = [];
-        const username = this.state.username;
-        const userid = this.state.userid;
-        if(payment.length>0){
-            content.push(<p>Successfully Registered,<br/><b>Ticket ID: </b>{username}<b><br/>Ref ID:</b>{userid}</p>)
-        }else{
-            let paymentLink = "/user/payment/"+userid+"."+"ATTENDEE";
-            content.push(<button className={"btn btn-outline-success"} onClick={()=>window.location.href=paymentLink}>Add Payment</button>);
-        }
-        return <React.Fragment>
-            <h3><u>Please Follow the Rules Given Below!</u></h3>
 
-            <h5> *All the attendees should be registered and should pay before attending*</h5>
-
-            <ul>
-                <li>Dress Code</li>
-                <ul>
-                    <li>Female - White blouse with a black skirt or white saree</li>
-                    <li>Male - White shirt with a black trouser</li>
-
-                </ul>
-                <li>Be seated half an hour before the beginning of the conferrence.</li>
-                <li>Get a book or a paper to write down important points.</li>
-                <li>AVOID getting any kind of foods to the conferrence hall.</li>
-                <li>AVOID distractions(Be kind enough to silence your phone while you are in the conferrence).</li>
-
-
-            </ul>
-            <h5>Conference Attendee Registration</h5>
-            {content}
-
-
-        </React.Fragment>;
-    }
     render() {
 
         const role = this.state.role;
@@ -153,13 +103,11 @@ export default class UDashboard extends React.Component{
             console.log(server_msg);
         }
         //console.log("Role:"+role);
-        if(role===UserRoles.RESEARCHER){
-            return this.getAuthorLayout(error);
+        if(role===UserRoles.MANAGER){
+            return this.getManagerLayout(error);
         }
-        if(role===UserRoles.WORKSHOP_PRESENTER){
-            return this.getPresenterLayout(error);
-        }else{
-            return this.getAttendeeLayout(error);
+        if(role===UserRoles.WORKER){
+            return this.getWorkerLayout(error);
         }
 
     }

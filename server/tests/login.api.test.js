@@ -14,7 +14,7 @@ const generateUsername = require('../api/util/username-generator').generateUsern
 //predefined details
 const password = "+ABp_03CnQxryP";
 const login = new Login();
-const username = generateUsername(Role.RESEARCHER);
+const username = generateUsername(Role.MANAGER);
 console.log("username generated: "+username);
 login.setUsername(username);
 login.setPassword(password);

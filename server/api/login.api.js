@@ -9,7 +9,7 @@ exports.Login = class Login{
         this.login_id ='';
         this.username = '';
         this.#password='';
-        this.role=UserRoles.ATTENDEE;
+        this.role=UserRoles.WORKER;
     }
     #getSHA256Hex(password){
         return crypto_hash.createHash('sha256').update(password).digest('hex');

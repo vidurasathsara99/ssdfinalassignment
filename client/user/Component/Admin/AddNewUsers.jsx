@@ -24,7 +24,7 @@ export default class AddNewUsers extends React.Component{
         this.clickedBtnStyle = "btn-orange";
         this.neutralBtnStyle = "btn-blue";
         //user types
-        this.types = ["Admin","Presenter","Author"];
+        this.types = ["Admin","Worker","Manager"];
     }
     componentDidMount() {
         this.onClickUserType(this.types[0]);
