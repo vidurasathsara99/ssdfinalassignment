@@ -27,7 +27,7 @@ server.use(session({
     store: redisStore()
 }));
 //attach to server
-// server.use(cors('Access-Control-Allow-Origin'));
+server.use(cors('Access-Control-Allow-Origin'));
 // server.use(jwt({
 //     cookie: 'jwt_cookie',
 //     key: 'jwtdata',
